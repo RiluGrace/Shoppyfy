@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity
         merchantlist=(ArrayList) db.getAllMerchant();
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(merchantlist);
+        mAdapter = new MyAdapter(merchantlist,this);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

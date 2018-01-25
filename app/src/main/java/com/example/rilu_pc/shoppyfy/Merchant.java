@@ -6,18 +6,21 @@ package com.example.rilu_pc.shoppyfy;
 
 public class Merchant
 {
-
+    String imageurl;
     String _name;
     String _location;
     String _business_type;
 
-    public Merchant()
+    public Merchant(String name, String loc, String type)
     {
 
     }
+    public Merchant()
+    {}
 
-    public Merchant( String name, String location,String business_type)
+    public Merchant(String imageurl, String name, String location,String business_type)
     {
+        this. imageurl=imageurl;
         this._name = name;
         this._location = location;
         this._business_type= business_type;
@@ -25,6 +28,15 @@ public class Merchant
     }
 
 
+    public String getImageurl()
+    {
+        return this.imageurl;
+    }
+
+    public void setImageurl(String imageurl)
+    {
+        this.imageurl = imageurl;
+    }
 
     public String getName()
     {

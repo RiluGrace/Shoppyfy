@@ -19,11 +19,13 @@ import android.view.View;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.mindorks.placeholderview.PlaceHolderView;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,7 +58,7 @@ public class HomeActivity extends AppCompatActivity
 
     LocationTrack locationTrack;
     EditText et_name,et_loc,et_type;
-
+    ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -68,11 +70,18 @@ public class HomeActivity extends AppCompatActivity
         et_name=findViewById(R.id.et_name);
         et_loc=findViewById(R.id.et_loc);
         et_type=findViewById(R.id.et_type);
-
+        image = findViewById(R.id.image);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        Picasso.with(this)
+                .load("https://waspwebsite-wpengine.netdna-ssl.com/wp-content/uploads/2014/04/1436436153_Login-1024x1024.png")
+                .placeholder(R.drawable.placeholder)   // optional
+                .error(R.drawable.error)      // optional
+                .resize(400,400)                        // optional
+                .into(image);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener()
         {
@@ -130,14 +139,13 @@ public class HomeActivity extends AppCompatActivity
             public void onClick(View view)
             {
 
-
-
+                String image="https://waspwebsite-wpengine.netdna-ssl.com/wp-content/uploads/2014/04/1436436153_Login-1024x1024.png";
                 String name=et_name.getText().toString();
                 String loc=et_loc.getText().toString();
                 String type=et_type.getText().toString();
                 Toast.makeText(getApplicationContext(), "saved " +"name:" + name + "\nlocation:" + loc + "\nbusiness type:" + type , Toast.LENGTH_SHORT).show();
 
-                db.addMerchant(new Merchant(name,loc,type));
+                db.addMerchant(new Merchant(image,name,loc,type));
 
                 // Reading all contacts
                 Log.d("Reading: ", "Reading all contacts..");

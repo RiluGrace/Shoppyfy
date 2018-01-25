@@ -21,6 +21,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
         private static final String TABLE_MERCHANT = "merchant";
         private static final String TABLE_TIME = "time";
         private static final String KEY_TIME ="time";
+        private static final String KEY_IMAGE="image";
         private static final String KEY_NAME = "name";
         private static final String KEY_LOCATION = "location";
         private static final String KEY_BUSSINESS_TYPE = "business_type";
@@ -34,7 +35,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
         // Creating Tables
         @Override
         public void onCreate(SQLiteDatabase db) {
-            String CREATE_MERCHANT_TABLE = "CREATE TABLE " + TABLE_MERCHANT + "("  + KEY_NAME + " TEXT,"+ KEY_LOCATION + " TEXT," + KEY_BUSSINESS_TYPE+ " TEXT" + ")";
+            String CREATE_MERCHANT_TABLE = "CREATE TABLE " + TABLE_MERCHANT + "("+ KEY_IMAGE + " TEXT," + KEY_NAME + " TEXT,"+ KEY_LOCATION + " TEXT," + KEY_BUSSINESS_TYPE+ " TEXT" + ")";
             db.execSQL(CREATE_MERCHANT_TABLE);
             String CREATE_TIME_TABLE = "CREATE TABLE " + TABLE_TIME + "("  + KEY_TIME + " TEXT" +")";
             db.execSQL(CREATE_TIME_TABLE);
@@ -55,6 +56,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
             SQLiteDatabase db = this.getWritableDatabase();
 
             ContentValues values = new ContentValues();
+            values.put(KEY_IMAGE,merchant.getImageurl());
             values.put(KEY_NAME, merchant.getName()); // Merchant Name
             values.put(KEY_LOCATION, merchant.get_location()); // merchant loc
             values.put(KEY_BUSSINESS_TYPE, merchant.get_business_type()); // merchant type
@@ -85,13 +87,13 @@ public class DatabaseHandler extends SQLiteOpenHelper
         Merchant getMerchant(String name) {
             SQLiteDatabase db = this.getReadableDatabase();
 
-            Cursor cursor = db.query(TABLE_MERCHANT, new String[] { KEY_NAME, KEY_BUSSINESS_TYPE,KEY_LOCATION }, KEY_NAME + "=?",
+            Cursor cursor = db.query(TABLE_MERCHANT, new String[] { KEY_IMAGE,KEY_NAME, KEY_BUSSINESS_TYPE,KEY_LOCATION }, KEY_NAME + "=?",
                     new String[] { name }, null, null, null, null);
             if (cursor != null)
                 cursor.moveToFirst();
 
-           Merchant merchant = new Merchant(cursor.getString(0),
-                    cursor.getString(1), cursor.getString(2));
+           Merchant merchant = new Merchant( cursor.getString(0),cursor.getString(1),
+                    cursor.getString(2), cursor.getString(3));
            // return merchant
            return merchant;
         }
@@ -123,9 +125,10 @@ public class DatabaseHandler extends SQLiteOpenHelper
             if (cursor.moveToFirst()) {
                 do {
                     Merchant merchant = new Merchant();
-                    merchant.setName(cursor.getString(0));
-                    merchant.setlocation(cursor.getString(1));
-                    merchant.setbusinesstype(cursor.getString(2));
+                    merchant.setImageurl(cursor.getString(0));
+                    merchant.setName(cursor.getString(1));
+                    merchant.setlocation(cursor.getString(2));
+                    merchant.setbusinesstype(cursor.getString(3));
                     // Adding merchant to list
                     merchantList.add(merchant);
                 } while (cursor.moveToNext());
@@ -169,6 +172,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
             SQLiteDatabase db = this.getWritableDatabase();
 
             ContentValues values = new ContentValues();
+            values.put(KEY_IMAGE,merchant.getImageurl());
             values.put(KEY_NAME, merchant.getName());
             values.put(KEY_LOCATION, merchant.get_location());
             values.put(KEY_BUSSINESS_TYPE, merchant.get_business_type());
