@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.rilu_pc.shoppyfy.ArticleActivity">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/mToolbar0">
+
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        android:id="@+id/linearLayout1">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="75dp"
+            android:ems="10"
+            android:hint="title"
+            android:background="@drawable/edit_text_border_bg"
+            android:padding="15dp"
+            android:inputType="textPersonName"
+            />
+
+        <EditText
+            android:id="@+id/et_body"
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="35dp"
+            android:ems="10"
+            android:lines="8"
+            android:minLines="6"
+            android:maxLines="10"
+            android:hint="body"
+            android:background="@drawable/edit_text_border_bg"
+            android:padding="15dp"
+            android:inputType="textMultiLine"
+            />
+
+    </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/linearLayout1"
+        android:layout_marginLeft="131dp"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="69dp"
+        android:text="SAVE" />
+    
+
+
+</RelativeLayout>
