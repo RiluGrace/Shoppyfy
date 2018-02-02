@@ -68,13 +68,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>
     {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        String image=mDataset.get(position).getImageurl();
+      //  String image=mDataset.get(position).getImageurl();
         String name=mDataset.get(position).getName();
         String location=mDataset.get(position).get_location();
         String businesstype=mDataset.get(position).get_business_type();
 
                 Picasso.with(mContext)
-                .load(image)
+               // .load(image)
+                  .load("https://static.highsnobiety.com/wp-content/uploads/2017/07/12094906/balenciaga-expensive-shopping-bag-00.jpg")
                 .placeholder(R.drawable.placeholder)   // optional
                 .error(R.drawable.error)      // optional
                 .resize(400,400)                        // optional

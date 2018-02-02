@@ -20,9 +20,12 @@ public class DatabaseHandler extends SQLiteOpenHelper
         private static final String DATABASE_NAME = "Database";
         private static final String TABLE_MERCHANT = "merchant";
         private static final String TABLE_TIME = "time";
+        private static final String TABLE_LOCATION = "loc";
         private static final String KEY_TIME ="time";
         private static final String KEY_IMAGE="image";
         private static final String KEY_NAME = "name";
+        private static final String KEY_CLOCATION = "loc";
+        private static final String KEY_CTIME ="time";
         private static final String KEY_LOCATION = "location";
         private static final String KEY_BUSSINESS_TYPE = "business_type";
 
@@ -39,6 +42,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
             db.execSQL(CREATE_MERCHANT_TABLE);
             String CREATE_TIME_TABLE = "CREATE TABLE " + TABLE_TIME + "("  + KEY_TIME + " TEXT" +")";
             db.execSQL(CREATE_TIME_TABLE);
+            String CREATE_LOCATION_TABLE = "CREATE TABLE " + TABLE_LOCATION + "("  + KEY_CLOCATION + " TEXT ," + KEY_CTIME + " TEXT" +")";
+            db.execSQL(CREATE_LOCATION_TABLE);
         }
 
         // Upgrading database
@@ -47,6 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
             // Drop older table if existed
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_MERCHANT);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIME);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOCATION);
             // Create tables again
             onCreate(db);
         }
@@ -83,6 +89,17 @@ public class DatabaseHandler extends SQLiteOpenHelper
             db.close(); // Closing
         }
 
+        void addLocation(Location l) {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(KEY_CLOCATION, l.get_loc());
+            values.put(KEY_CTIME, l.get_time());
+            // Inserting Row
+            db.insert(TABLE_LOCATION, null, values);
+            //2nd argument is String containing nullColumnHack
+            db.close(); // Closing database connection
+        }
         // code to get the single merchant
         Merchant getMerchant(String name) {
             SQLiteDatabase db = this.getReadableDatabase();
@@ -111,7 +128,19 @@ public class DatabaseHandler extends SQLiteOpenHelper
             // return time..
             return time1;
         }
+        // code to get the single merchant
+        Location getloc(String loc) {
+            SQLiteDatabase db = this.getReadableDatabase();
 
+            Cursor cursor = db.query(TABLE_LOCATION, new String[] { KEY_CTIME,KEY_CLOCATION }, KEY_CLOCATION + "=?",
+                    new String[] { loc }, null, null, null, null);
+            if (cursor != null)
+                cursor.moveToFirst();
+
+            Location l = new Location( cursor.getString(0), cursor.getString(1));
+            // return merchant
+            return l;
+        }
         // code to get all merchants in a list view
         public List<Merchant> getAllMerchant() {
             List<Merchant> merchantList = new ArrayList<Merchant>();
@@ -136,6 +165,29 @@ public class DatabaseHandler extends SQLiteOpenHelper
 
             // return merchant list
             return merchantList;
+        }
+        // code to get all location in a list view
+        public List<Location> getAllLocation() {
+            List<Location> locationList = new ArrayList<Location>();
+            // Select All Query
+            String selectQuery = "SELECT  * FROM " + TABLE_LOCATION;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    Location l = new Location();
+                    l.setTime(cursor.getString(0));
+                    l.setloc(cursor.getString(2));
+                    // Adding merchant to list
+                    locationList.add(l);
+                } while (cursor.moveToNext());
+            }
+
+            // return merchant list
+            return locationList;
         }
 
         // code to get all time in a list view

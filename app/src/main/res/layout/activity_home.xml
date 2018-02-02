@@ -127,6 +127,18 @@
         android:layout_marginTop="20dp"
         android:onClick="details_now"
         android:text="VIEW DETAILS" />
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn1"
+        android:layout_marginLeft="131dp"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="69dp"
+        android:onClick="location"
+        android:text="Location" />
 
 
     <ImageView

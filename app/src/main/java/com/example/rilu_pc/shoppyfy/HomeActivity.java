@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.fusedbulblib.GetCurrentLocation;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.squareup.picasso.Picasso;
 
@@ -77,10 +78,10 @@ public class HomeActivity extends AppCompatActivity
         getSupportActionBar().setHomeButtonEnabled(true);
 
         Picasso.with(this)
-                .load("https://waspwebsite-wpengine.netdna-ssl.com/wp-content/uploads/2014/04/1436436153_Login-1024x1024.png")
+                .load("https://static.highsnobiety.com/wp-content/uploads/2017/07/12094906/balenciaga-expensive-shopping-bag-00.jpg")
                 .placeholder(R.drawable.placeholder)   // optional
-                .error(R.drawable.error)      // optional
-                .resize(400,400)                        // optional
+               // .error(R.drawable.error)      // optional
+                .resize(400,400)                     // optional
                 .into(image);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener()
@@ -268,7 +269,7 @@ public class HomeActivity extends AppCompatActivity
     }
     private void setupDrawer(){
         mDrawerView
-                .addView(new DrawerHeader())
+                .addView(new DrawerHeader(HomeActivity.this))
                 //.addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_PROFILE))
                 //.addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_REQUESTS))
                 //addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_MESSAGE))
@@ -298,6 +299,12 @@ public class HomeActivity extends AppCompatActivity
     {
 
         Intent i = new Intent(HomeActivity.this, DetailActivity.class);
+        startActivity(i);
+    }
+    public void location(View r)
+    {
+
+        Intent i = new Intent(HomeActivity.this, CurrentLocationActivity.class);
         startActivity(i);
     }
 

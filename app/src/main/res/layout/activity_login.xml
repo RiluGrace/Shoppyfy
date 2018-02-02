@@ -110,7 +110,10 @@
         android:layout_marginTop="69dp"
         android:text="LOGIN" />
 
-    <TextView
+
+
+
+<TextView
         android:id="@+id/tv_go_reg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

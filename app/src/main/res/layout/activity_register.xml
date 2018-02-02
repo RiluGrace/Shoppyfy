@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     android:gravity="center"
     tools:context="com.example.rilu_pc.shoppyfy.RegisterActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,11 +18,31 @@
     >
 
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/linearLayout1">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/profile"
+            android:layout_gravity="center"
+            android:layout_marginTop="155dp"
+
+            />
+
+        <Button
+            android:id="@+id/upload"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="Upload" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,7 +60,7 @@
                     android:text="FirstName" />
 
                 <EditText
-                    android:id="@+id/editText22"
+                    android:id="@+id/fname"
                     android:layout_width="168dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -66,7 +88,7 @@
                     android:text="LastName" />
 
                 <EditText
-                    android:id="@+id/editText32"
+                    android:id="@+id/lname"
                     android:layout_width="168dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -86,13 +108,13 @@
 
 
                 <TextView
-                    android:id="@+id/textView41"
+                    android:id="@+id/tv_email"
                     android:layout_width="127dp"
                     android:layout_height="wrap_content"
                     android:text="Username" />
 
                 <EditText
-                    android:id="@+id/editText42"
+                    android:id="@+id/email"
                     android:layout_width="168dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -121,7 +143,7 @@
 
 
                 <EditText
-                    android:id="@+id/editText52"
+                    android:id="@+id/pswd"
                     android:layout_width="168dp"
                     android:layout_height="wrap_content"
                     android:hint="Password"
@@ -148,7 +170,7 @@
                     android:text="Confirm Password" />
 
                 <EditText
-                    android:id="@+id/editText62"
+                    android:id="@+id/pass1"
                     android:layout_width="168dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -175,7 +197,7 @@
                     android:text="Address" />
 
                 <EditText
-                    android:id="@+id/editText71"
+                    android:id="@+id/addrs"
                     android:layout_width="168dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -202,7 +224,7 @@
                     android:text="Phone No:" />
 
                 <EditText
-                    android:id="@+id/editText81"
+                    android:id="@+id/phno"
                     android:layout_width="168dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -229,11 +251,10 @@
                     android:text="Business type" />
 
                 <EditText
-                    android:id="@+id/editText91"
+                    android:id="@+id/type"
                     android:layout_width="168dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-
                     android:inputType="textPersonName"
                     android:hint="type" />
             </LinearLayout>
