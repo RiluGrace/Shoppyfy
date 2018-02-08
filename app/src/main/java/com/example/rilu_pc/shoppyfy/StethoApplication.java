@@ -1,6 +1,7 @@
 package com.example.rilu_pc.shoppyfy;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.facebook.stetho.Stetho;
 
@@ -9,6 +10,7 @@ import com.facebook.stetho.Stetho;
  */
 
 public class StethoApplication extends Application {
+
     public void onCreate() {
         super.onCreate();
         Stetho.initializeWithDefaults(this);

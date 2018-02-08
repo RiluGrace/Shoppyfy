@@ -7,47 +7,39 @@ package com.example.rilu_pc.shoppyfy;
 public class Location
 {
 
-    String _loc;
+    String _lon;
+    String _lat;
     String _time;
 
-    public Location(String _loc)
-    {
 
-    }
     public Location()
     {}
 
-    public Location(String time, String loc)
+    public Location(String time, String lon,String lat)
     {
 
         this._time = time;
-        this._loc = loc;
-
-
+        this._lon = lon;
+        this._lat = lat;
     }
 
+    public String get_time() {return this._time;}
 
+    public void setTime(String time) {this._time = time;}
 
-    public String get_time()
+    public String get_lon()
     {
-        return this._time;
+        return this._lon;
     }
 
-    public void setTime(String time)
+    public void setlon(String lon){this._lon = lon;}
+
+    public String get_lat()
     {
-        this._time = time;
+        return this._lat;
     }
 
-    public String get_loc()
-    {
-        return this._loc;
-    }
-
-    public void setloc(String loc)
-    {
-        this._loc = loc;
-    }
-
+    public void setlat(String lat){this._lat = lat;}
 }
 
 

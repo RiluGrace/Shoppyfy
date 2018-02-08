@@ -2,6 +2,7 @@ package com.example.rilu_pc.shoppyfy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,6 +64,8 @@ public class ArticleActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.mToolbar0);
+        mToolbar.setTitle(" Create Article ");
+        mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

@@ -19,15 +19,11 @@ import com.mindorks.placeholderview.annotations.View;
 @Layout(R.layout.drawer_menu_item)
 public class DrawerMenuItem
 {
-
-   // public static final int DRAWER_MENU_ITEM_PROFILE = 1;
- //   public static final int DRAWER_MENU_ITEM_REQUESTS = 2;
-  //  public static final int DRAWER_MENU_ITEM_GROUPS = 3;
-   // public static final int DRAWER_MENU_ITEM_MESSAGE = 4;
     public static final int DRAWER_MENU_ITEM_ARTICLES = 1;
     public static final int DRAWER_MENU_ITEM_NEW_ARTICLES = 2;
-    public static final int DRAWER_MENU_ITEM_LOGIN_HISTORY = 3;
-    public static final int DRAWER_MENU_ITEM_LOGOUT = 4;
+    public static final int DRAWER_MENU_ITEM_LOCATION_HISTROY = 3;
+    public static final int DRAWER_MENU_ITEM_LOGIN_HISTORY = 4;
+    public static final int DRAWER_MENU_ITEM_LOGOUT = 5;
 
     private int mMenuPosition;
     private Context mContext;
@@ -49,30 +45,16 @@ public class DrawerMenuItem
     @Resolve
     private void onResolved() {
         switch (mMenuPosition){
-          /*  case DRAWER_MENU_ITEM_PROFILE:
-                itemNameTxt.setText("Profile");
-                itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.profile));
-                break;
-            case DRAWER_MENU_ITEM_REQUESTS:
-                itemNameTxt.setText("Requests");
-                itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.profile));
-                break;
-            case DRAWER_MENU_ITEM_GROUPS:
-                itemNameTxt.setText("Groups");
-                itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.profile));
-                break;
-            case DRAWER_MENU_ITEM_MESSAGE:
-                itemNameTxt.setText("Messages");
-                itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.profile));
-                break;
-                */
             case DRAWER_MENU_ITEM_ARTICLES:
                 itemNameTxt.setText("Articles");
                 itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.profile));
-
                 break;
             case DRAWER_MENU_ITEM_NEW_ARTICLES:
                 itemNameTxt.setText("New Articles");
+                itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.profile));
+                break;
+            case DRAWER_MENU_ITEM_LOCATION_HISTROY:
+                itemNameTxt.setText("Location Histroy");
                 itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.profile));
                 break;
             case DRAWER_MENU_ITEM_LOGOUT:
@@ -89,23 +71,6 @@ public class DrawerMenuItem
     @Click(R.id.menuitem)
     private void onMenuItemClick(){
         switch (mMenuPosition){
-           /* case DRAWER_MENU_ITEM_PROFILE:
-                Toast.makeText(mContext, "Profile", Toast.LENGTH_SHORT).show();
-                if(mCallBack != null)mCallBack.onProfileMenuSelected();
-                break;
-            case DRAWER_MENU_ITEM_REQUESTS:
-                Toast.makeText(mContext, "Requests", Toast.LENGTH_SHORT).show();
-                if(mCallBack != null)mCallBack.onRequestMenuSelected();
-                break;
-            case DRAWER_MENU_ITEM_GROUPS:
-                Toast.makeText(mContext, "Groups", Toast.LENGTH_SHORT).show();
-                if(mCallBack != null)mCallBack.onGroupsMenuSelected();
-                break;
-            case DRAWER_MENU_ITEM_MESSAGE:
-                Toast.makeText(mContext, "Messages", Toast.LENGTH_SHORT).show();
-                if(mCallBack != null)mCallBack.onMessagesMenuSelected();
-                break;
-                */
             case DRAWER_MENU_ITEM_ARTICLES:
                 Intent i=new Intent(mContext,ArticleListActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -118,6 +83,13 @@ public class DrawerMenuItem
                 mContext.startActivity(a);
                 Toast.makeText(mContext, "New Articles", Toast.LENGTH_SHORT).show();
                 if(mCallBack != null)mCallBack.onNewArticlesMenuSelected();
+                break;
+            case DRAWER_MENU_ITEM_LOCATION_HISTROY:
+                Intent loc=new Intent(mContext,LocationDetailListActivity.class);
+                loc.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(loc);
+                Toast.makeText(mContext, "Location Histroy", Toast.LENGTH_SHORT).show();
+                if(mCallBack != null)mCallBack.onLocationHistroyMenuSelected();
                 break;
             case DRAWER_MENU_ITEM_LOGOUT:
                 Intent la=new Intent(mContext,LoginActivity.class);
@@ -145,16 +117,11 @@ public class DrawerMenuItem
 
     public interface DrawerCallBack
     {
-       /* void onProfileMenuSelected();
-        void onRequestMenuSelected();
-        void onGroupsMenuSelected();
-        void onMessagesMenuSelected();
-        void onNotificationsMenuSelected();
-        void onSettingsMenuSelected();
-        */
+
         void onArticlesMenuSelected();
         void onLogoutMenuSelected();
         void onLoginHistroyMenuSelected();
         void onNewArticlesMenuSelected();
+        void onLocationHistroyMenuSelected();
     }
 }

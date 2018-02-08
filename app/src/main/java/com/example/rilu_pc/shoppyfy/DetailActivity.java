@@ -1,10 +1,12 @@
 package com.example.rilu_pc.shoppyfy;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -37,5 +39,21 @@ public class DetailActivity extends AppCompatActivity
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(merchantlist,this);
         mRecyclerView.setAdapter(mAdapter);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.mToolbar4);
+        mToolbar.setTitle("Merchant Details");
+        mToolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                startActivity(new Intent(DetailActivity.this, HomeActivity.class));
+            }
+        });
     }
 }

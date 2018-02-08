@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rilu_pc.shoppyfy.DetailActivity">
+    tools:context="com.example.rilu_pc.shoppyfy.LocationDetailListActivity">
+
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/gradient"
-        android:id="@+id/mToolbar4">
+        android:id="@+id/mToolbar2">
     </android.support.v7.widget.Toolbar>
 
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/recycler_view"
         android:scrollbars="vertical"
         android:layout_marginTop="55dp"
         android:layout_width="match_parent"

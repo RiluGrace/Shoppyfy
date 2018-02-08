@@ -24,8 +24,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
         private static final String KEY_TIME ="time";
         private static final String KEY_IMAGE="image";
         private static final String KEY_NAME = "name";
-        private static final String KEY_CLOCATION = "loc";
-        private static final String KEY_CTIME ="time";
+        private static final String KEY_LATITUDE= "lat";
+        private static final String KEY_LONDITUDE= "lon";
         private static final String KEY_LOCATION = "location";
         private static final String KEY_BUSSINESS_TYPE = "business_type";
 
@@ -42,7 +42,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
             db.execSQL(CREATE_MERCHANT_TABLE);
             String CREATE_TIME_TABLE = "CREATE TABLE " + TABLE_TIME + "("  + KEY_TIME + " TEXT" +")";
             db.execSQL(CREATE_TIME_TABLE);
-            String CREATE_LOCATION_TABLE = "CREATE TABLE " + TABLE_LOCATION + "("  + KEY_CLOCATION + " TEXT ," + KEY_CTIME + " TEXT" +")";
+            String CREATE_LOCATION_TABLE = "CREATE TABLE " + TABLE_LOCATION + "("  + KEY_TIME + " TEXT ," + KEY_LONDITUDE + " TEXT ," + KEY_LATITUDE + " TEXT" + ")";
             db.execSQL(CREATE_LOCATION_TABLE);
         }
 
@@ -89,12 +89,14 @@ public class DatabaseHandler extends SQLiteOpenHelper
             db.close(); // Closing
         }
 
-        void addLocation(Location l) {
+        void addLocation(Location location) {
             SQLiteDatabase db = this.getWritableDatabase();
 
             ContentValues values = new ContentValues();
-            values.put(KEY_CLOCATION, l.get_loc());
-            values.put(KEY_CTIME, l.get_time());
+            values.put(KEY_TIME, location.get_time());
+            values.put(KEY_LONDITUDE,location.get_lon());
+            values.put(KEY_LATITUDE,location.get_lat());
+
             // Inserting Row
             db.insert(TABLE_LOCATION, null, values);
             //2nd argument is String containing nullColumnHack
@@ -129,16 +131,15 @@ public class DatabaseHandler extends SQLiteOpenHelper
             return time1;
         }
         // code to get the single merchant
-        Location getloc(String loc) {
+        Location getlon(String loc) {
             SQLiteDatabase db = this.getReadableDatabase();
 
-            Cursor cursor = db.query(TABLE_LOCATION, new String[] { KEY_CTIME,KEY_CLOCATION }, KEY_CLOCATION + "=?",
+            Cursor cursor = db.query(TABLE_LOCATION, new String[] { KEY_TIME,KEY_LONDITUDE,KEY_LATITUDE }, KEY_TIME + "=?",
                     new String[] { loc }, null, null, null, null);
             if (cursor != null)
                 cursor.moveToFirst();
 
-            Location l = new Location( cursor.getString(0), cursor.getString(1));
-            // return merchant
+            Location l = new Location( cursor.getString(0), cursor.getString(1),cursor.getString(2));
             return l;
         }
         // code to get all merchants in a list view
@@ -178,11 +179,13 @@ public class DatabaseHandler extends SQLiteOpenHelper
             // looping through all rows and adding to list
             if (cursor.moveToFirst()) {
                 do {
-                    Location l = new Location();
-                    l.setTime(cursor.getString(0));
-                    l.setloc(cursor.getString(2));
-                    // Adding merchant to list
-                    locationList.add(l);
+                    Location location = new Location();
+                    location.setTime(cursor.getString(0));
+                    location.setlon(cursor.getString(1));
+                    location.setlat(cursor.getString(2));
+
+                    // Adding location to list
+                    locationList.add(location);
                 } while (cursor.moveToNext());
             }
 
@@ -233,6 +236,19 @@ public class DatabaseHandler extends SQLiteOpenHelper
             return db.update(TABLE_MERCHANT, values, KEY_NAME + " = ?",
                     new String[] { String.valueOf(merchant.getName()) });
         }
+        public int updateLocation(Location location)
+        {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(KEY_TIME, location.get_time());
+            values.put(KEY_LONDITUDE,location.get_lon());
+            values.put(KEY_LATITUDE,location.get_lat());
+
+            // updating row
+            return db.update(TABLE_LOCATION, values, KEY_TIME + " = ?",
+                    new String[] { String.valueOf(location.get_time()) });
+        }
 
         // code to update the single time
         public int updateTime(Time time)
@@ -255,7 +271,14 @@ public class DatabaseHandler extends SQLiteOpenHelper
                     new String[] { String.valueOf(merchant.getName()) });
             db.close();
         }
-
+        // Deleting single location
+        public void deleteLocation(Location location)
+        {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete(TABLE_LOCATION, KEY_TIME + " = ?",
+                    new String[] { String.valueOf(location.get_time()) });
+            db.close();
+        }
 
 
         // Deleting single time
@@ -269,6 +292,18 @@ public class DatabaseHandler extends SQLiteOpenHelper
         public int getMerchantCount()
         {
             String countQuery = "SELECT  * FROM " + TABLE_MERCHANT;
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(countQuery, null);
+            cursor.close();
+
+            // return count
+            return cursor.getCount();
+        }
+
+
+        public int getLocationCount()
+        {
+            String countQuery = "SELECT  * FROM " + TABLE_LOCATION;
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery(countQuery, null);
             cursor.close();

@@ -25,7 +25,8 @@
             android:exported="true" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".DetailActivity"
+            android:label="Merchant Details"  />
         <activity
             android:name=".ArticleActivity"
             android:label="Create Article" />
@@ -35,16 +36,20 @@
         <activity
             android:name=".ArticleDetailActivity"
             android:label="Article Details" />
-        <activity android:name=".LoginHistoryActivity" />
-        <activity android:name=".TimeDetailListActivity" />
-        <activity
-            android:name=".CurrentLocationActivity" />
+        <activity android:name=".LoginHistoryActivity"
+            android:label="Login History" />
+        <activity android:name=".TimeDetailListActivity"
+            android:label="Logged in Time " />
+        <activity android:name=".CurrentLocationActivity" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            </intent-filter>
+        </activity>
+        <activity android:name=".LocationDetailListActivity"
+            android:label="Location Details"  />
     </application>
 
 </manifest>
