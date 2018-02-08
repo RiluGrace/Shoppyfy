@@ -1,17 +1,23 @@
 package com.example.rilu_pc.shoppyfy;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.EventLogTags;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,31 +33,32 @@ import javax.net.ssl.HttpsURLConnection;
 public class ArticleDetailActivity extends AppCompatActivity
 {
      int id;
-    TextView head,desc,h,d;
+    TextView h,d;
     String responseText;
     StringBuffer response;
     URL url;
     ListView listView;
     String tag="Article list";
+    private Context mContext;
 
-    private RecyclerView.Adapter mAdapter;
     final ArrayList<Article> articlelist = new ArrayList<>();
     private ProgressDialog progressDialog;
 
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
-         h = (TextView) findViewById(R.id.head);
-         d= (TextView) findViewById(R.id.desc);
+        h = (TextView) findViewById(R.id.head);
+        d = (TextView) findViewById(R.id.desc);
 
-
-        id=getIntent().getExtras().getInt("id");
+        id = getIntent().getExtras().getInt("id");
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.mToolbar);
+        mToolbar.setTitle("Article Details");
+        mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -59,11 +66,18 @@ public class ArticleDetailActivity extends AppCompatActivity
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ArticleDetailActivity.this,ArticleListActivity.class));
+                startActivity(new Intent(ArticleDetailActivity.this, ArticleListActivity.class));
             }
         });
     }
-    class GetServerData extends AsyncTask
+
+    protected void onStart()
+    {
+        super.onStart();
+        new GetServerData().execute();
+    }
+
+    class GetServerData extends AsyncTask<Article, Void, Article>
     {
 
         @Override
@@ -78,29 +92,22 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
 
         @Override
-        protected Object doInBackground(Object[] objects) {
+        protected Article doInBackground(Article[] articles) {
             return getWebServiceResponseData();
-        }
 
+        }
         @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-
-            mAdapter.notifyDataSetChanged();
-
-            // Dismiss the progress dialog
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
-            // For populating list data
-
+        protected void onPostExecute(Article article)
+        {
+            super.onPostExecute(article);
+            String header=article.getHeader();
+            String description=article.getDescription();
+            h.setText(header);
+            d.setText(description);
         }
-
-
-
-
     }
 
-    public Object getWebServiceResponseData()
+    public Article getWebServiceResponseData()
     {
         try {
             String path="http://rilu-article.herokuapp.com/articles/" +id+ ".json";
@@ -134,15 +141,22 @@ public class ArticleDetailActivity extends AppCompatActivity
         //Call ServerData() method to call webservice and store result in response
         //  response = service.ServerData(path, postDataParams);
         Log.d(tag, "data:" + responseText);
+        Article article=new Article();
         try {
            // JSONArray jsonarray = new JSONArray(responseText);
 
                 JSONObject jsonobject = new JSONObject(responseText);
                 int id = jsonobject.getInt("id");
-                String header = jsonobject.getString("title");
-                h.setText(header);
+
+                 String header = jsonobject.getString("title");
+                 article.setHeader(header);
+              //  h.setText(header);
+            //String head=h.getText().toString();
                 String description=jsonobject.getString("message");
-                d.setText(description);
+                article.setDescription(description);
+
+
+              //  d.setText(description);
                 Log.d("", "id:" + id);
                 Log.d("", "header:" + header);
                 Log.d("", "description:" + description);
@@ -155,7 +169,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         catch (JSONException e) {
             e.printStackTrace();
         }
-        return  null;
+        return  article;
     }
 
 

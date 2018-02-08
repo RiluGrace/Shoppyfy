@@ -2,6 +2,7 @@ package com.example.rilu_pc.shoppyfy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,19 +13,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +54,8 @@ public class ArticleActivity extends AppCompatActivity {
     List<NameValuePair> params = new ArrayList<NameValuePair>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
 
@@ -56,19 +64,32 @@ public class ArticleActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.mToolbar0);
+        mToolbar.setTitle(" Create Article ");
+        mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+
                 startActivity(new Intent(ArticleActivity.this, HomeActivity.class));
             }
         });
     }
 
-    class GetServerData extends AsyncTask {
+    public void save(View v)
+
+    {
+        new GetServerData().execute();
+//        startActivity(new Intent(ArticleActivity.this, ArticleListActivity.class));
+    }
+
+    class GetServerData extends AsyncTask
+    {
 
         @Override
         protected void onPreExecute() {
@@ -82,7 +103,9 @@ public class ArticleActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Object doInBackground(Object[] objects) {
+        protected Object doInBackground(Object[] objects)
+        {
+
             return getWebServiceResponseData();
         }
 
@@ -90,60 +113,118 @@ public class ArticleActivity extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
 
-            mAdapter.notifyDataSetChanged();
 
-            // Dismiss the progress dialog
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
-            // For populating list data
+            try {
+                mAdapter.notifyDataSetChanged();
+
+                // Dismiss the progress dialog
+                if (progressDialog.isShowing())
+                    progressDialog.dismiss();
+                // For populating list data
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 
 
     }
 
-    public Object getWebServiceResponseData() {
+    public Object getWebServiceResponseData()
+    {
         try {
             String path = "http://rilu-article.herokuapp.com/articles.json";
             url = new URL(path);
             Log.d("", "ServerData: " + path);
+            DataOutputStream printout;
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
             conn.setReadTimeout(15000);
             conn.setConnectTimeout(15000);
             conn.setRequestMethod("POST");
-//            conn.setDoInput(true);
+            conn.setDoInput(true);
+            conn.setUseCaches (false);
+            conn.setRequestProperty("Content-Type","application/json");
+            conn.setRequestProperty("api-key","api-key");
+            conn.setRequestProperty("api-secret","api-secret");
+            conn.connect();
 //            conn.setDoOutput(true);
 
-            params.add(new BasicNameValuePair("title","What is IT"));
-            params.add(new BasicNameValuePair("message","Information Technology"));
-          //  OutputStream os = conn.getOutputStream();
-        //    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            //*********************
+           //to get the title n body
+            String title=et_title.getText().toString();
+            String body=et_body.getText().toString();
+            //Whereas postParameters is the query string, such as “param1=value1&param2=value2”
+           // String parameter="title="+title+"&message="+body;
+
+
+
+           JSONObject articles = new JSONObject();
+           JSONObject data=new JSONObject();
+           articles.put("title",title);
+           articles.put("message",body);
+           data.put("article",articles);
+
+//            OutputStreamWriter wr= new OutputStreamWriter(conn.getOutputStream());
+//            wr.write(data.toString());
+
+            // Send POST output.
+            printout = new DataOutputStream(conn.getOutputStream ());
+//            StringEntity se=new StringEntity(data.toString());
+            printout.writeBytes(data.toString());
+            printout.flush ();
+            printout.close ();
+
+
+//            conn.setFixedLengthStreamingMode(data.toString().length());
+//            PrintWriter out = new PrintWriter(conn.getOutputStream());
+//            out.print(data);
+//            out.close();
+
+//            params.add(new BasicNameValuePair("title","What is IT" ));
+//            params.add(new BasicNameValuePair("message","Information Technology"));
+//            OutputStream os = conn.getOutputStream();
+//            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
 //           writer.write(getQuery(params));
 //            writer.flush();
 //            writer.close();
 //            os.close();
 
-            conn.connect();
+
 
             int responseCode = conn.getResponseCode();
 
+            response = new StringBuffer();
             Log.d("", "Response code: " + responseCode);
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
+            if (responseCode == 201) {
                 // Reading response from input Stream
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String output;
-                response = new StringBuffer();
 
                 while ((output = in.readLine()) != null) {
                     response.append(output);
                 }
                 in.close();
             }
+            else
+            {
+                runOnUiThread(new Runnable() {
+
+                    public void run() {
+
+                        Toast.makeText(getApplicationContext(), "API call failed", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        responseText = response.toString();
+        if (response.toString()!=null)
+        {
+            responseText = response.toString();
+        }
         //Call ServerData() method to call webservice and store result in response
         //  response = service.ServerData(path, postDataParams);
         Log.d("", "data:" + responseText);

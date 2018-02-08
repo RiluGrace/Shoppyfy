@@ -39,7 +39,6 @@ public class ArticleListActivity extends AppCompatActivity {
 
   final ArrayList<Article> articlelist = new ArrayList<>();
     private ProgressDialog progressDialog;
-    ListView listView;
     String tag="Article list";
 
     @Override

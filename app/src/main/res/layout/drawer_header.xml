@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
-        android:text="RILU GRACE"
+
         android:layout_marginTop="20dp"
         android:textStyle="bold"/>
     <TextView
@@ -28,6 +28,5 @@
         android:textColor="@color/colorAccent"
         android:layout_marginTop="5dp"
         android:textSize="14sp"
-        android:text="rilugrace95@gmail.com"
         android:textStyle="normal"/>
 </LinearLayout>

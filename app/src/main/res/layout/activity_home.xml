@@ -35,7 +35,8 @@
                 android:id="@+id/textView21"
                 android:layout_width="127dp"
                 android:layout_height="wrap_content"
-                android:text="Name" />
+                android:text="Name"
+                android:textColor="#8e3591"/>
 
             <EditText
                 android:id="@+id/et_name"
@@ -47,32 +48,7 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp"
-            android:gravity="center"
-            android:id="@+id/linearLayout3">
 
-
-
-
-            <TextView
-                android:id="@+id/textView31"
-                android:layout_width="127dp"
-                android:layout_height="wrap_content"
-                android:text="Location" />
-
-            <EditText
-                android:id="@+id/et_loc"
-                android:layout_width="168dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="location" />
-        </LinearLayout>
 
 
         <LinearLayout
@@ -89,7 +65,8 @@
                 android:id="@+id/textView41"
                 android:layout_width="127dp"
                 android:layout_height="wrap_content"
-                android:text="Business Type" />
+                android:text="Business Type"
+                android:textColor="#8e3591"/>
 
             <EditText
                 android:id="@+id/et_type"
@@ -127,6 +104,18 @@
         android:layout_marginTop="20dp"
         android:onClick="details_now"
         android:text="VIEW DETAILS" />
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn1"
+        android:layout_marginLeft="131dp"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="69dp"
+        android:onClick="location"
+        android:text="Location" />
 
 
     <ImageView
