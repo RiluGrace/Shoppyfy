@@ -275,7 +275,7 @@ public class HomeActivity extends AppCompatActivity implements GpsOnListener
                 .show();
     }
 
-    @Override
+
     protected void onDestroy() {
         super.onDestroy();
         if(locationTrack!=null) {

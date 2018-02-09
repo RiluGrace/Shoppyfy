@@ -2,6 +2,7 @@ package com.example.rilu_pc.shoppyfy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,7 +55,9 @@ public class ArticleListActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.mToolbar1);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.mToolbar5);
+        mToolbar.setTitle("Article Lists");
+        mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

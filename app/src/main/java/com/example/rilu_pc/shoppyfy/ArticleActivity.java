@@ -85,7 +85,7 @@ public class ArticleActivity extends AppCompatActivity {
 
     {
         new GetServerData().execute();
-//        startActivity(new Intent(ArticleActivity.this, ArticleListActivity.class));
+       startActivity(new Intent(ArticleActivity.this, ArticleListActivity.class));
     }
 
     class GetServerData extends AsyncTask

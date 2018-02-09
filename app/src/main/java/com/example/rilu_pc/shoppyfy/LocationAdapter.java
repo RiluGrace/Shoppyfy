@@ -18,9 +18,13 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
 
     private ArrayList<Location> Data;
 
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
+
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
         // each data item is just a string in this case
@@ -35,13 +39,17 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             lon=mView.findViewById(R.id.lon);
             lat=mView.findViewById(R.id.lat);
         }
-    }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+
+
+    }
     public LocationAdapter(ArrayList<Location> myDataset)
     {
         Data = myDataset;
+
+
     }
+
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -69,6 +77,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         holder.lon.setText(lon);
         String lat=Data.get(position).get_lat();
         holder.lat.setText(lat);
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

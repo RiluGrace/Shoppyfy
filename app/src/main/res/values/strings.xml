@@ -45,6 +45,7 @@
     <string name="location_exit">DENY</string>
     <string name="location_allow">ALLOW</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>

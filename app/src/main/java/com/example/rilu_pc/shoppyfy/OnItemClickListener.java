@@ -7,3 +7,6 @@ package com.example.rilu_pc.shoppyfy;
 public interface OnItemClickListener {
     void onItemClick(Article item);
 }
+
+
+
